@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        var isActive = btn.getAttribute('onclick').indexOf(lang) !== -1;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      document.querySelectorAll('[data-lang]').forEach(function(el) {
+        if (el.getAttribute('data-lang') === lang) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('mcslang', lang); } catch(e) {}
+    }
+    try {
+      var s = localStorage.getItem('mcslang');
+      if (s && s !== 'es') setLang(s);
+    } catch(e) {}
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SCRF: Cómo cambiar formato en 8 minutos. Caso real Conservas Galicia +45% producción. ROI en 18 meses. Checklist descargable.">
+  <title>SCRF – Cambio Rápido de Formato en 8 Minutos | MC SEAMER Blog</title>
+  <style>
+    :root {
+      --o:#E87722;--od:#C05A0A;--og:rgba(232,119,34,0.12);
+      --bg0:#0E0F11;--bg2:#161719;--bg3:#1E2024;
+      --bd:rgba(255,255,255,0.07);--bdh:rgba(255,255,255,0.13);
+      --wh:#F0F1F2;--mu:#c1c2c5;--chd:#d8d9dc;
+      --fh:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      --fb:'Helvetica Neue',sans-serif;
+      --nh:72px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--bg0);color:var(--wh);font-family:var(--fb);font-weight:400;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit}
+    button{font-family:inherit}
+    :focus-visible{outline:2px solid var(--o);outline-offset:3px}
+
+    [data-lang]{display:none}
+    [data-lang].active{display:block}
+    span[data-lang]{display:none!important}
+    span[data-lang].active{display:inline!important}
+
+    .skip-link{position:absolute;top:-999px;left:16px;background:var(--o);color:#fff;padding:10px 18px;font-size:14px;font-family:var(--fh);letter-spacing:2px;text-transform:uppercase;text-decoration:none;z-index:9999;transition:top .2s}
+    .skip-link:focus{top:8px}
+
+    /* LANG BAR */
+    #lang-bar{position:fixed;top:0;left:0;right:0;z-index:1001;display:flex;justify-content:flex-end;align-items:center;padding:14px clamp(20px,4vw,48px);pointer-events:none}
+    .lang-btns{pointer-events:all;display:flex;gap:2px}
+    .lang-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--mu);font-family:var(--fh);font-size:12px;letter-spacing:3px;padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:all .2s;min-height:36px}
+    .lang-btn.active,.lang-btn:hover{background:var(--o);border-color:var(--o);color:#fff}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--nh);display:flex;align-items:center;padding:0 clamp(20px,5vw,64px);background:rgba(14,15,17,0.95);border-bottom:1px solid var(--bd);transition:background .3s}
+    .nav-left{display:flex;align-items:center;flex-shrink:0;margin-right:auto}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+    .logo img{height:38px;width:auto;max-width:190px;object-fit:contain;display:block}
+    .nav-links{display:flex;gap:clamp(20px,2.5vw,40px);list-style:none;flex:1;justify-content:left;padding:0 clamp(32px,2vw,100px)}
+    .nav-links a{font-family:var(--fh);font-size:12px;letter-spacing:2.5px;color:#fff;text-decoration:none;text-transform:uppercase;transition:color .2s;white-space:nowrap;padding:4px 0}
+    .nav-links a:hover,.nav-links a.active-link{color:var(--o)}
+    .nav-cta{display:flex;align-items:center;flex-shrink:0;margin-left:auto}
+    .btn-sm{font-family:var(--fh);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:10px 20px;background:var(--o);color:#fff;text-decoration:none;border:none;cursor:pointer;transition:background .2s;white-space:nowrap;min-height:40px;display:flex;align-items:center}
+    .btn-sm:hover{background:var(--od)}
+    .nav-hamburger{display:none;background:transparent;border:none;cursor:pointer;padding:8px;margin-left:16px}
+    .nav-hamburger span{display:block;width:22px;height:2px;background:var(--wh);margin:5px 0;transition:all .3s}
+    .nav-drawer{display:none;position:fixed;top:var(--nh);left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--bd);padding:24px clamp(20px,5vw,40px) 32px;z-index:899;flex-direction:column;gap:0}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-family:var(--fh);font-size:18px;letter-spacing:3px;text-transform:uppercase;color:var(--chd);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--bd);transition:color .2s}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--o)}
+
+    /* ARTICLE HERO */
+    .article-hero{padding-top:calc(var(--nh) + 60px);padding-bottom:60px;background:linear-gradient(135deg,var(--bg2) 0,var(--bg0) 100%);position:relative;overflow:hidden}
+    .article-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(232,119,34,0.07) 0,transparent 60%);pointer-events:none}
+    .article-hero-inner{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,48px);position:relative;z-index:2}
+    .article-breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mu);margin-bottom:28px}
+    .article-breadcrumb a{color:var(--mu);text-decoration:none;transition:color .2s}
+    .article-breadcrumb a:hover{color:var(--o)}
+    .article-breadcrumb span{color:var(--o)}
+    .article-tag{display:inline-flex;background:rgba(232,119,34,0.15);color:var(--o);font-family:var(--fh);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;margin-bottom:20px}
+    .article-title{font-family:var(--fh);font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-0.01em;margin-bottom:20px}
+    .article-title em{color:var(--o);font-style:normal}
+    .article-meta-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;color:var(--mu);font-size:13px;font-family:var(--fh);letter-spacing:1px;padding-top:24px;border-top:1px solid var(--bd)}
+    .article-meta-bar .dot{width:4px;height:4px;border-radius:50%;background:var(--o);flex-shrink:0}
+
+    /* ARTICLE COVER */
+    .article-cover{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,48px) 0}
+    .article-cover img{width:100%;height:clamp(240px,40vw,480px);object-fit:cover;display:block}
+
+    /* ARTICLE BODY */
+    .article-body{max-width:860px;margin:0 auto;padding:clamp(40px,6vw,72px) clamp(20px,5vw,48px)}
+
+    .article-body h2{font-family:var(--fh);font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:1px;margin:48px 0 16px;color:var(--wh);line-height:1.2}
+    .article-body h2:first-child{margin-top:0}
+    .article-body h3{font-family:var(--fh);font-size:clamp(16px,2vw,20px);font-weight:600;letter-spacing:.5px;margin:32px 0 12px;color:var(--o)}
+    .article-body p{font-size:clamp(15px,1.6vw,17px);color:var(--mu);line-height:1.85;margin-bottom:20px}
+    .article-body strong{color:var(--wh);font-weight:600}
+    .article-body a{color:var(--o);text-decoration:underline;text-underline-offset:3px}
+    .article-body a:hover{color:var(--od)}
+
+    /* HIGHLIGHT BOX */
+    .highlight-box{background:var(--bg2);border-left:3px solid var(--o);padding:24px 28px;margin:32px 0}
+    .highlight-box p{margin:0;color:var(--wh);font-size:clamp(15px,1.6vw,17px);line-height:1.8}
+    .highlight-box p strong{color:var(--o)}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:36px 0}
+    .stat-box{background:var(--bg2);padding:clamp(20px,3vw,32px) clamp(16px,2vw,24px);text-align:center;border:1px solid var(--bd)}
+    .stat-box-val{font-family:var(--fh);font-size:clamp(32px,5vw,48px);font-weight:700;color:var(--o);line-height:1}
+    .stat-box-lbl{font-family:var(--fh);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-top:8px}
+
+    /* CHECKLIST */
+    .checklist{list-style:none;margin:24px 0 32px;display:flex;flex-direction:column;gap:12px}
+    .checklist li{display:flex;align-items:flex-start;gap:14px;font-size:clamp(14px,1.5vw,16px);color:var(--mu);line-height:1.7}
+    .checklist li::before{content:'';width:20px;height:20px;flex-shrink:0;background:rgba(232,119,34,0.15);border:1px solid rgba(232,119,34,0.35);margin-top:2px;display:flex;align-items:center;justify-content:center}
+    .checklist li .check-icon{width:20px;height:20px;flex-shrink:0;background:rgba(232,119,34,0.15);border:1px solid rgba(232,119,34,0.35);margin-top:2px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:var(--o)}
+    .checklist li .check-icon::before{content:'✓'}
+
+    /* BEFORE / AFTER TABLE */
+    .compare-table{width:100%;border-collapse:collapse;margin:28px 0}
+    .compare-table th{font-family:var(--fh);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mu);padding:12px 16px;text-align:left;border-bottom:2px solid var(--bd)}
+    .compare-table th.orange{color:var(--o);border-bottom-color:var(--o)}
+    .compare-table td{padding:14px 16px;font-size:15px;color:var(--mu);border-bottom:1px solid var(--bd);vertical-align:top}
+    .compare-table td strong{color:var(--wh)}
+    .compare-table tr:last-child td{border-bottom:none}
+    .compare-table td.highlight{color:var(--o);font-weight:600}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:0;margin:28px 0}
+    .step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--bd)}
+    .step:last-child{border-bottom:none}
+    .step-num{font-family:var(--fh);font-size:clamp(28px,4vw,40px);font-weight:700;color:rgba(232,119,34,0.25);flex-shrink:0;line-height:1;width:48px;text-align:center}
+    .step-content h3{font-family:var(--fh);font-size:16px;font-weight:600;color:var(--wh);letter-spacing:.5px;margin-bottom:6px}
+    .step-content p{font-size:14px;color:var(--mu);line-height:1.7;margin:0}
+
+    /* CTA INLINE */
+    .cta-inline{background:var(--o);padding:clamp(32px,5vw,52px) clamp(24px,5vw,48px);margin:52px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+    .cta-inline h3{font-family:var(--fh);font-size:clamp(18px,2.5vw,26px);font-weight:700;letter-spacing:1px;color:#fff;margin-bottom:4px}
+    .cta-inline p{font-size:14px;color:rgba(255,255,255,0.8);margin:0}
+    .btn-white{background:#fff;color:var(--o);font-family:var(--fh);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;padding:13px 28px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,color .2s;min-height:44px;display:inline-flex;align-items:center;white-space:nowrap;font-weight:600}
+    .btn-white:hover{background:var(--od);color:#fff}
+
+    /* RELATED */
+    .related{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,48px) clamp(60px,8vw,100px)}
+    .related-title{font-family:var(--fh);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--mu);margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--bd)}
+    .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+    .related-card{background:var(--bg2);border:1px solid var(--bd);padding:28px;text-decoration:none;transition:border-color .3s,background .3s;display:block}
+    .related-card:hover{border-color:rgba(232,119,34,0.3);background:var(--bg3)}
+    .related-card-date{font-family:var(--fh);font-size:11px;letter-spacing:2px;color:var(--o);text-transform:uppercase;margin-bottom:10px}
+    .related-card-title{font-family:var(--fh);font-size:18px;font-weight:600;color:var(--wh);line-height:1.3;margin-bottom:10px}
+    .related-card-excerpt{font-size:14px;color:var(--mu);line-height:1.6;margin-bottom:16px}
+    .related-card-link{font-family:var(--fh);font-size:12px;letter-spacing:1.5px;color:var(--o);text-transform:uppercase}
+
+    /* FOOTER */
+    footer{background:var(--bg2);border-top:1px solid var(--bd);padding:clamp(28px,5vh,48px) clamp(20px,6vw,64px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+    .footer-logo img{height:34px;width:auto;max-width:160px;object-fit:contain;display:block}
+    .footer-mid{font-size:13px;color:var(--mu);text-align:center}
+    .footer-right{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+    .footer-link{font-family:var(--fh);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+    .footer-link:hover{color:var(--o)}
+
+    /* COOKIE */
+    #cookie-banner{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bdh);padding:clamp(16px,3vw,24px) clamp(20px,6vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;z-index:9000;transition:transform .4s ease,opacity .4s ease}
+    #cookie-banner.hidden{transform:translateY(100%);opacity:0;pointer-events:none}
+    #cookie-banner p{font-size:13px;color:var(--mu);line-height:1.6;max-width:640px;margin:0}
+    #cookie-banner p a{color:var(--o);text-decoration:underline;text-underline-offset:3px}
+    .cookie-actions{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+    .cookie-accept{background:var(--o);color:#fff;font-family:var(--fh);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;transition:background .2s;min-height:40px}
+    .cookie-accept:hover{background:var(--od)}
+    .cookie-reject{background:transparent;color:var(--mu);font-family:var(--fh);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:10px 22px;border:1px solid var(--bd);cursor:pointer;transition:border-color .2s,color .2s;min-height:40px}
+    .cookie-reject:hover{border-color:var(--o);color:var(--o)}
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:var(--bg2)}
+    ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--o)}
+
+    /* RESPONSIVE */
+    @media(max-width:960px){
+      .nav-links,.nav-cta{display:none}
+      .nav-hamburger{display:block}
+      .related-grid{grid-template-columns:1fr}
+      .stats-row{grid-template-columns:repeat(3,1fr)}
+    }
+    @media(max-width:600px){
+      :root{--nh:64px}
+      .stats-row{grid-template-columns:1fr}
+      .cta-inline{flex-direction:column;align-items:flex-start}
+      .compare-table{font-size:13px}
+      .compare-table th,.compare-table td{padding:10px 10px}
+      footer{flex-direction:column;text-align:center;align-items:center}
+      .footer-right{justify-content:center}
+      #cookie-banner{flex-direction:column;align-items:flex-start}
+      .cookie-actions{width:100%}
+      .cookie-accept,.cookie-reject{flex:1;text-align:center;justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">
+  <span data-lang="es" class="active">Saltar al contenido</span>
+  <span data-lang="en">Skip to content</span>
+</a>
+
+
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-left">
+    <a href="../index.html" class="logo" aria-label="MC SEAMER – Inicio">
+      <img src="https://res.cloudinary.com/dcfqpdifq/image/upload/c_fill/v1772815082/logo_kk6ixz.png" alt="MC SEAMER">
+    </a>
+  </div>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html"><span data-lang="es" class="active">Modelos</span><span data-lang="en">Models</span></a></li>
+    <li><a href="index.html"><span data-lang="es" class="active">Características</span><span data-lang="en">Specs</span></a></li>
+    <li><a href="index.html"><span data-lang="es" class="active">Solicitar Cotización</span><span data-lang="en">Request Quote</span></a></li>
+    <li><a href="blog.html" class="active-link">Blog</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="../index.html#contact" class="btn-sm">
+      <span data-lang="es" class="active">Solicitar Cotización</span>
+      <span data-lang="en">Request Quote</span>
+    </a>
+  </div>
+  <button class="nav-hamburger" onclick="toggleDrawer()" aria-label="Abrir menú" aria-expanded="false" id="hamburger-btn">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav id="nav-drawer" class="nav-drawer" aria-label="Mobile navigation">
+  <a href="../index.html#products" onclick="closeDrawer()"><span data-lang="es" class="active">Modelos</span><span data-lang="en">Models</span></a>
+  <a href="../index.html#specs" onclick="closeDrawer()"><span data-lang="es" class="active">Características</span><span data-lang="en">Specs</span></a>
+  <a href="../blog.html" onclick="closeDrawer()">Blog</a>
+  <a href="../index.html#contact" onclick="closeDrawer()" style="color:var(--o);font-weight:600"><span data-lang="es" class="active">Solicitar Cotización</span><span data-lang="en">Request Quote</span></a>
+</nav>
+
+<main id="main-content">
+
+  <!-- ARTICLE HERO -->
+  <header class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-breadcrumb">
+        <a href="../blog.html"><span data-lang="es" class="active">Blog</span><span data-lang="en">Blog</span></a>
+        <span>→</span>
+        <span><span data-lang="es" class="active">Sistemas SCRF</span><span data-lang="en">SCRF Systems</span></span>
+      </div>
+      <div class="article-tag">SCRF · <span data-lang="es" class="active">Cambio de Formato</span><span data-lang="en">Format Change</span></div>
+      <h1 class="article-title">
+        <span data-lang="es" class="active">SCRF: Cómo cambiar formato<br>en <em>8 minutos</em> — ROI en 18 meses</span>
+        <span data-lang="en">SCRF: How to change format<br>in <em>8 minutes</em> — ROI in 18 months</span>
+      </h1>
+      <div class="article-meta-bar">
+        <span>6 MAR 2026</span>
+        <span class="dot"></span>
+        <span>8 <span data-lang="es" class="active">min lectura</span><span data-lang="en">min read</span></span>
+        <span class="dot"></span>
+        <span><span data-lang="es" class="active">Por el equipo técnico MC SEAMER</span><span data-lang="en">By MC SEAMER technical team</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- COVER IMAGE -->
+  <div class="article-cover">
+    <img src="https://res.cloudinary.com/dcfqpdifq/image/upload/q_auto,f_auto,w_860,h_480,c_fill/v1772816012/FORMATOS_eaxbsh.jpg"
+         alt="KIT SCRF – Cambio rápido de formato MC SEAMER"
+         loading="eager">
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <article class="article-body">
+
+    <div class="highlight-box">
+      <p>
+        <strong><span data-lang="es" class="active">Caso real:</span><span data-lang="en">Real case:</span></strong>
+        <span data-lang="es" class="active"> Conservas Galicia redujo su tiempo de cambio de formato de <strong>47 minutos a 8 minutos</strong> tras instalar el KIT SCRF. Resultado: <strong>+45% de producción anual</strong> y retorno de la inversión en <strong>18 meses</strong>.</span>
+        <span data-lang="en"> Conservas Galicia reduced format change time from <strong>47 minutes to 8 minutes</strong> after installing the SCRF KIT. Result: <strong>+45% annual production</strong> and return on investment in <strong>18 months</strong>.</span>
+      </p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-box-val">8'</div>
+        <div class="stat-box-lbl"><span data-lang="es" class="active">Tiempo cambio</span><span data-lang="en">Change time</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-val">+45%</div>
+        <div class="stat-box-lbl"><span data-lang="es" class="active">Producción anual</span><span data-lang="en">Annual output</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-val">18m</div>
+        <div class="stat-box-lbl">ROI</div>
+      </div>
+    </div>
+
+    <h2><span data-lang="es" class="active">¿Qué es el sistema SCRF?</span><span data-lang="en">What is the SCRF system?</span></h2>
+    <p>
+      <span data-lang="es" class="active">El <strong>Sistema de Cambio Rápido de Formato (SCRF)</strong> de MC SEAMER es un kit de componentes intercambiables que permite ajustar la cerradora a diferentes diámetros y alturas de lata sin necesidad de herramientas especializadas ni personal de mantenimiento externo. Todo el proceso se realiza desde la línea de producción, en tiempo real.</span>
+      <span data-lang="en">The MC SEAMER <strong>Rapid Format Change System (SCRF)</strong> is a kit of interchangeable components that allows adjusting the seamer to different can diameters and heights without the need for specialised tools or external maintenance staff. The entire process is carried out from the production line, in real time.</span>
+    </p>
+    <p>
+      <span data-lang="es" class="active">Antes del SCRF, un cambio de formato estándar en una cerradora industrial implicaba parar la línea, llamar al técnico y esperar. En plantas con múltiples formatos de lata —conservas de atún, verduras, bebidas— esto podía representar <strong>entre 40 y 90 minutos de parada</strong> por cada cambio.</span>
+      <span data-lang="en">Before SCRF, a standard format change on an industrial seamer meant stopping the line, calling a technician and waiting. In plants with multiple can formats — tuna, vegetables, beverages — this could represent <strong>between 40 and 90 minutes of downtime</strong> per change.</span>
+    </p>
+
+    <h2><span data-lang="es" class="active">Antes y después: los números reales</span><span data-lang="en">Before and after: the real numbers</span></h2>
+    <p>
+      <span data-lang="es" class="active">Basándonos en datos reales de instalaciones de nuestros clientes, este es el impacto medio documentado tras implementar el KIT SCRF:</span>
+      <span data-lang="en">Based on real data from our customers' installations, this is the average documented impact after implementing the SCRF KIT:</span>
+    </p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th><span data-lang="es" class="active">Parámetro</span><span data-lang="en">Parameter</span></th>
+          <th><span data-lang="es" class="active">Antes (sin SCRF)</span><span data-lang="en">Before (no SCRF)</span></th>
+          <th class="orange"><span data-lang="es" class="active">Después (con SCRF)</span><span data-lang="en">After (with SCRF)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Tiempo de cambio de formato</span><span data-lang="en">Format change time</span></strong></td>
+          <td>40–90 min</td>
+          <td class="highlight">6–10 min</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Cambios por semana (media)</span><span data-lang="en">Changes per week (avg)</span></strong></td>
+          <td>3–5</td>
+          <td class="highlight">3–5</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Horas paradas/semana</span><span data-lang="en">Downtime hours/week</span></strong></td>
+          <td>3–6 h</td>
+          <td class="highlight">0.5–1 h</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Técnico externo necesario</span><span data-lang="en">External technician needed</span></strong></td>
+          <td><span data-lang="es" class="active">Sí, habitual</span><span data-lang="en">Yes, common</span></td>
+          <td class="highlight">No</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Ahorro anual estimado</span><span data-lang="en">Estimated annual saving</span></strong></td>
+          <td>—</td>
+          <td class="highlight">+€18.000–€35.000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2><span data-lang="es" class="active">Componentes del KIT SCRF</span><span data-lang="en">SCRF KIT components</span></h2>
+    <p>
+      <span data-lang="es" class="active">El kit está diseñado para que cualquier operario de línea lo gestione sin formación técnica avanzada. Incluye cuatro familias de componentes:</span>
+      <span data-lang="en">The kit is designed so that any line operator can manage it without advanced technical training. It includes four component families:</span>
+    </p>
+    <ul class="checklist">
+      <li><span class="check-icon"></span><div><strong><span data-lang="es" class="active">Ruedas de cierre</span><span data-lang="en">Seaming rollers</span></strong> — <span data-lang="es" class="active">Calibradas por diámetro y perfil de cierre. Intercambio sin herramientas en menos de 2 min por cabezal.</span><span data-lang="en">Calibrated by diameter and seam profile. Tool-free exchange in under 2 min per head.</span></div></li>
+      <li><span class="check-icon"></span><div><strong><span data-lang="es" class="active">Platos de base</span><span data-lang="en">Base plates</span></strong> — <span data-lang="es" class="active">Adaptados al diámetro exterior de la lata. Sistema de encaje rápido con referencia grabada.</span><span data-lang="en">Adapted to can outer diameter. Quick-fit system with engraved reference.</span></div></li>
+      <li><span class="check-icon"></span><div><strong><span data-lang="es" class="active">Adaptadores de altura</span><span data-lang="en">Height adapters</span></strong> — <span data-lang="es" class="active">Permiten ajustar la posición vertical de trabajo. Graduación milimétrica visible desde el exterior.</span><span data-lang="en">Allow vertical work position adjustment. Millimetre graduation visible from outside.</span></div></li>
+      <li><span class="check-icon"></span><div><strong><span data-lang="es" class="active">Guías de formato</span><span data-lang="en">Format guides</span></strong> — <span data-lang="es" class="active">Centran la lata en la entrada y salida. Cambian en 60 segundos mediante clips de liberación rápida.</span><span data-lang="en">Centre the can at infeed and outfeed. Change in 60 seconds via quick-release clips.</span></div></li>
+    </ul>
+
+    <h2><span data-lang="es" class="active">Cómo se hace el cambio: paso a paso</span><span data-lang="en">How the change is done: step by step</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3><span data-lang="es" class="active">Parar la línea y retirar latas residuales</span><span data-lang="en">Stop the line and remove residual cans</span></h3>
+          <p><span data-lang="es" class="active">Se para la cerradora desde el panel. No es necesario apagar toda la línea. El operario retira las latas que quedan en el sinfín de entrada. Tiempo: ~1 min.</span><span data-lang="en">The seamer is stopped from the panel. It is not necessary to shut down the entire line. The operator removes cans remaining in the infeed worm. Time: ~1 min.</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3><span data-lang="es" class="active">Sustituir las guías de formato</span><span data-lang="en">Replace format guides</span></h3>
+          <p><span data-lang="es" class="active">Los clips de liberación rápida permiten retirar las guías de entrada/salida sin herramientas. Se montan las guías del nuevo formato (están codificadas por color y referencia). Tiempo: ~1 min.</span><span data-lang="en">Quick-release clips allow removal of infeed/outfeed guides without tools. The guides for the new format are mounted (colour-coded and referenced). Time: ~1 min.</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3><span data-lang="es" class="active">Cambiar platos de base y ruedas de cierre</span><span data-lang="en">Change base plates and seaming rollers</span></h3>
+          <p><span data-lang="es" class="active">Cabezal a cabezal, se retiran los platos y ruedas del formato anterior y se instalan los nuevos. El sistema de encaje rápido elimina tornillos. Tiempo: ~4 min para una MC-6.</span><span data-lang="en">Head by head, previous format plates and rollers are removed and new ones installed. The quick-fit system eliminates screws. Time: ~4 min for an MC-6.</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3><span data-lang="es" class="active">Ajustar altura y verificar</span><span data-lang="en">Adjust height and verify</span></h3>
+          <p><span data-lang="es" class="active">Se ajusta la altura de trabajo con la escala milimétrica. Se hacen 3 cierres de prueba y se verifica la calidad visualmente. Si está dentro de tolerancia, la línea arranca. Tiempo: ~2 min.</span><span data-lang="en">Work height is adjusted using the millimetre scale. 3 test seams are made and quality is verified visually. If within tolerance, the line starts. Time: ~2 min.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p>
+        <strong><span data-lang="es" class="active">Total proceso:</span><span data-lang="en">Total process:</span></strong>
+        <span data-lang="es" class="active"> <strong>~8 minutos</strong> con operario entrenado (1ª semana de uso). Sin SCRF, el mismo proceso en una MC-6 convencional requiere entre 45 y 75 minutos con técnico especializado.</span>
+        <span data-lang="en"> <strong>~8 minutes</strong> with trained operator (1st week of use). Without SCRF, the same process on a conventional MC-6 requires between 45 and 75 minutes with a specialised technician.</span>
+      </p>
+    </div>
+
+    <h2><span data-lang="es" class="active">Cálculo del ROI: ejemplo real a 18 meses</span><span data-lang="en">ROI calculation: real example at 18 months</span></h2>
+    <p>
+      <span data-lang="es" class="active">Tomamos como referencia una planta conservera con una MC-6 que realiza <strong>4 cambios de formato semanales</strong>. Antes del SCRF: 60 min/cambio. Después: 8 min/cambio. La línea produce <strong>500 latas/min</strong>.</span>
+      <span data-lang="en">We take as reference a cannery with an MC-6 performing <strong>4 format changes per week</strong>. Before SCRF: 60 min/change. After: 8 min/change. The line produces <strong>500 cans/min</strong>.</span>
+    </p>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th><span data-lang="es" class="active">Concepto</span><span data-lang="en">Item</span></th>
+          <th><span data-lang="es" class="active">Cálculo</span><span data-lang="en">Calculation</span></th>
+          <th class="orange"><span data-lang="es" class="active">Valor anual</span><span data-lang="en">Annual value</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Tiempo recuperado/semana</span><span data-lang="en">Time recovered/week</span></strong></td>
+          <td>(60–8) min × 4 cambios</td>
+          <td class="highlight">208 min/semana</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Latas adicionales/semana</span><span data-lang="en">Extra cans/week</span></strong></td>
+          <td>208 × 500 latas</td>
+          <td class="highlight">104.000 latas</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Ingresos adicionales/año</span><span data-lang="en">Extra revenue/year</span></strong></td>
+          <td><span data-lang="es" class="active">104.000 × 50 semanas × €0,08/lata</span><span data-lang="en">104,000 × 50 weeks × €0.08/can</span></td>
+          <td class="highlight">≈ €416.000</td>
+        </tr>
+        <tr>
+          <td><strong><span data-lang="es" class="active">Ahorro en técnico externo</span><span data-lang="en">External technician saving</span></strong></td>
+          <td>4 visitas/sem × €120 × 50 sem</td>
+          <td class="highlight">≈ €24.000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CTA INLINE -->
+    <div class="cta-inline">
+      <div>
+        <h3><span data-lang="es" class="active">¿Quieres calcular tu ROI específico?</span><span data-lang="en">Want to calculate your specific ROI?</span></h3>
+        <p><span data-lang="es" class="active">Nuestro equipo técnico hace el análisis gratuito para tu planta.</span><span data-lang="en">Our technical team provides a free analysis for your plant.</span></p>
+      </div>
+      <a href="../index.html#contact" class="btn-white">
+        <span data-lang="es" class="active">Solicitar análisis gratuito</span>
+        <span data-lang="en">Request free analysis</span>
+      </a>
+    </div>
+
+    <h2><span data-lang="es" class="active">Checklist de implementación SCRF</span><span data-lang="en">SCRF implementation checklist</span></h2>
+    <p>
+      <span data-lang="es" class="active">Antes de instalar el KIT SCRF en tu planta, valida estos puntos con tu equipo:</span>
+      <span data-lang="en">Before installing the SCRF KIT in your plant, validate these points with your team:</span>
+    </p>
+    <ul class="checklist">
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Inventario de todos los formatos de lata que se procesan actualmente (diámetro + altura).</span><span data-lang="en">Inventory of all can formats currently processed (diameter + height).</span></div></li>
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Registro de frecuencia de cambios de formato por semana/mes.</span><span data-lang="en">Log of format change frequency per week/month.</span></div></li>
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Identificación del operario/os responsables del cambio de formato.</span><span data-lang="en">Identification of the operator(s) responsible for format change.</span></div></li>
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Espacio de almacenaje para el KIT (carro portaherramientas recomendado, 60×40 cm).</span><span data-lang="en">Storage space for the KIT (tool trolley recommended, 60×40 cm).</span></div></li>
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Sesión de formación de 2 horas con técnico MC SEAMER (incluida en la instalación).</span><span data-lang="en">2-hour training session with MC SEAMER technician (included in installation).</span></div></li>
+      <li><span class="check-icon"></span><div><span data-lang="es" class="active">Registro del tiempo de cambio actual como baseline para medir mejora post-instalación.</span><span data-lang="en">Log of current change time as baseline to measure post-installation improvement.</span></div></li>
+    </ul>
+
+  </article>
+
+</main>
+
+<!-- RELATED ARTICLES -->
+<section class="related">
+  <div class="related-title"><span data-lang="es" class="active">Más artículos del blog</span><span data-lang="en">More blog articles</span></div>
+  <div class="related-grid">
+    <a href="mantenimiento.html" class="related-card">
+      <div class="related-card-date">5 MAR 2026</div>
+      <div class="related-card-title"><span data-lang="es" class="active">Mantenimiento predictivo: 3 años más de vida útil</span><span data-lang="en">Predictive maintenance: 3 more years of service life</span></div>
+      <div class="related-card-excerpt"><span data-lang="es" class="active">Checklist semanal que reduce averías un 73%. Ahorro real de €12.400/año en repuestos y downtime.</span><span data-lang="en">Weekly checklist that reduces breakdowns by 73%. Real saving of €12,400/year in parts and downtime.</span></div>
+      <div class="related-card-link"><span data-lang="es" class="active">Leer artículo</span><span data-lang="en">Read article</span> →</div>
+    </a>
+    <a href="nlnt.html" class="related-card">
+      <div class="related-card-date">4 MAR 2026</div>
+      <div class="related-card-title"><span data-lang="es" class="active">No Lata No Tapa: 0 desperdicio certificado</span><span data-lang="en">No Can No Lid: certified 0 waste</span></div>
+      <div class="related-card-excerpt"><span data-lang="es" class="active">100.000 ciclos testeados sin errores. Comparativa técnica vs sistemas tradicionales.</span><span data-lang="en">100,000 tested cycles without errors. Technical comparison vs traditional systems.</span></div>
+      <div class="related-card-link"><span data-lang="es" class="active">Leer artículo</span><span data-lang="en">Read article</span> →</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="https://res.cloudinary.com/dcfqpdifq/image/upload/c_fill/v1772815082/logo_kk6ixz.png" alt="MC SEAMER">
+  </div>
+  <div class="footer-mid">
+    <span data-lang="es" class="active">© 2026 MC SEAMER · Todos los derechos reservados</span>
+    <span data-lang="en">© 2026 MC SEAMER · All rights reserved</span>
+  </div>
+  <div class="footer-right">
+    <a href="../index.html#contact" class="footer-link"><span data-lang="es" class="active">Contacto</span><span data-lang="en">Contact</span></a>
+    <a href="../blog.html" class="footer-link">Blog</a>
+    <a href="../index.html" class="footer-link"><span data-lang="es" class="active">Inicio</span><span data-lang="en">Home</span></a>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" role="region" aria-label="Cookie consent">
+  <p>
+    <span data-lang="es" class="active">Usamos cookies para mejorar tu experiencia. <a href="#">Política de cookies</a>.</span>
+    <span data-lang="en">We use cookies to improve your experience. <a href="#">Cookie policy</a>.</span>
+  </p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" onclick="acceptCookies()">
+      <span data-lang="es" class="active">Aceptar</span><span data-lang="en">Accept</span>
+    </button>
+    <button class="cookie-reject" onclick="rejectCookies()">
+      <span data-lang="es" class="active">Rechazar</span><span data-lang="en">Reject</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  // NAV DRAWER
+  function toggleDrawer() {
+    var drawer = document.getElementById('nav-drawer');
+    var btn = document.getElementById('hamburger-btn');
+    var isOpen = drawer.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('hamburger-btn').setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e) {
+    var drawer = document.getElementById('nav-drawer');
+    var btn = document.getElementById('hamburger-btn');
+    if (drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) {
+      closeDrawer();
+    }
+  });
+
+  // COOKIE
+  (function() {
+    try {
+      if (localStorage.getItem('mcscookie')) {
+        document.getElementById('cookie-banner').classList.add('hidden');
+      }
+    } catch(e) {}
+  })();
+  function acceptCookies() {
+    try { localStorage.setItem('mcscookie', '1'); } catch(e) {}
+    document.getElementById('cookie-banner').classList.add('hidden');
+  }
+  function rejectCookies() {
+    try { localStorage.setItem('mcscookie', '0'); } catch(e) {}
+    document.getElementById('cookie-banner').classList.add('hidden');
+  }
+</script>
+
+</body>
+</html>
