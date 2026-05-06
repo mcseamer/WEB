@@ -275,32 +275,74 @@ function setLang(lang) {
         <div class="c-item"><div class="c-icon">🌐</div><div><div class="c-label">Web</div><div class="c-value"><a href="https://www.mcseamer.com" target="_blank" rel="noopener noreferrer">www.mcseamer.com</a></div></div></div>
       </div>
     </div>
-    <form class="contact-form" id="contact-form" novalidate>
-      <div class="form-row">
-        <div class="form-group"><label for="f-name"><span data-lang="es" class="active">Nombre *</span><span data-lang="en">Name *</span></label><input id="f-name" name="name" type="text" placeholder="Juan García / John Smith" required autocomplete="name"></div>
-        <div class="form-group"><label for="f-company"><span data-lang="es" class="active">Empresa *</span><span data-lang="en">Company *</span></label><input id="f-company" name="company" type="text" placeholder="Empresa S.L." required autocomplete="organization"></div>
-      </div>
-      <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" placeholder="email@empresa.com" required autocomplete="email"></div>
-      <div class="form-group"><label for="f-phone"><span data-lang="es" class="active">Teléfono</span><span data-lang="en">Phone</span></label><input id="f-phone" name="phone" type="tel" placeholder="+34 600 000 000" autocomplete="tel"></div>
-      <div class="form-group">
-        <label for="f-model"><span data-lang="es" class="active">Modelo de Interés</span><span data-lang="en">Model of Interest</span></label>
-        <select id="f-model" name="model">
-          <option value="">— <span data-lang="es" class="active">Seleccionar modelo</span><span data-lang="en">Select model</span> —</option>
-          <option value="mc2">MC-2 — 2 estaciones (hasta 120 latas/min)</option>
-          <option value="mc4">MC-4 — 4 estaciones (hasta 250 latas/min)</option>
-          <option value="mc6">MC-6 — 6 estaciones (hasta 500 latas/min)</option>
-          <option value="mc8">MC-8 — 8 estaciones (hasta 650 latas/min)</option>
-          <option value="unknown"><span data-lang="es" class="active">No lo sé todavía</span><span data-lang="en">Not sure yet</span></option>
-        </select>
-      </div>
-      <div class="form-group"><label for="f-prod"><span data-lang="es" class="active">Producción requerida (latas/min)</span><span data-lang="en">Required output (cans/min)</span></label><input id="f-prod" name="production" type="text" placeholder="Ej: 300 latas/min"></div>
-      <div class="form-group"><label for="f-message"><span data-lang="es" class="active">Mensaje</span><span data-lang="en">Message</span></label><textarea id="f-message" name="message" placeholder="Cuéntanos sobre tu proyecto..."></textarea></div>
-      <div class="form-success" id="form-success" role="alert" aria-live="polite">
-        <span data-lang="es" class="active">✓ Solicitud enviada. Nuestro equipo se pondrá en contacto contigo en breve.</span>
-        <span data-lang="en">✓ Request sent. Our team will be in touch with you shortly.</span>
-      </div>
-      <button type="submit" class="btn-orange form-submit"><span data-lang="es" class="active">Enviar Solicitud de Cotización</span><span data-lang="en">Send Quote Request</span></button>
-    </form>
+    <form
+  class="contact-form"
+  id="contact-form"
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  novalidate
+>
+  <input type="hidden" name="form-name" value="contact">
+  <p style="display:none;">
+    <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+  </p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="f-name"><span data-lang="es" class="active">Nombre *</span><span data-lang="en">Name *</span></label>
+      <input id="f-name" name="name" type="text" placeholder="Juan García / John Smith" required autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label for="f-company"><span data-lang="es" class="active">Empresa *</span><span data-lang="en">Company *</span></label>
+      <input id="f-company" name="company" type="text" placeholder="Empresa S.L." required autocomplete="organization">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="f-email">Email *</label>
+    <input id="f-email" name="email" type="email" placeholder="email@empresa.com" required autocomplete="email">
+  </div>
+
+  <div class="form-group">
+    <label for="f-phone"><span data-lang="es" class="active">Teléfono</span><span data-lang="en">Phone</span></label>
+    <input id="f-phone" name="phone" type="tel" placeholder="+34 600 000 000" autocomplete="tel">
+  </div>
+
+  <div class="form-group">
+    <label for="f-model"><span data-lang="es" class="active">Modelo de Interés</span><span data-lang="en">Model of Interest</span></label>
+    <select id="f-model" name="model">
+      <option value="">— Seleccionar modelo —</option>
+      <option value="mc2">MC-2 — 2 estaciones (hasta 120 latas/min)</option>
+      <option value="mc4">MC-4 — 4 estaciones (hasta 250 latas/min)</option>
+      <option value="mc6">MC-6 — 6 estaciones (hasta 500 latas/min)</option>
+      <option value="mc8">MC-8 — 8 estaciones (hasta 650 latas/min)</option>
+      <option value="unknown">No lo sé todavía</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="f-prod"><span data-lang="es" class="active">Producción requerida (latas/min)</span><span data-lang="en">Required output (cans/min)</span></label>
+    <input id="f-prod" name="production" type="text" placeholder="Ej: 300 latas/min">
+  </div>
+
+  <div class="form-group">
+    <label for="f-message"><span data-lang="es" class="active">Mensaje</span><span data-lang="en">Message</span></label>
+    <textarea id="f-message" name="message" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+  </div>
+
+  <div class="form-success" id="form-success" role="alert" aria-live="polite">
+    <span data-lang="es" class="active">✓ Solicitud enviada. Nuestro equipo se pondrá en contacto contigo en breve.</span>
+    <span data-lang="en">✓ Request sent. Our team will be in touch with you shortly.</span>
+  </div>
+
+  <button type="submit" class="btn-orange form-submit">
+    <span data-lang="es" class="active">Enviar Solicitud de Cotización</span>
+    <span data-lang="en">Send Quote Request</span>
+  </button>
+</form>
+
   </div>
 </section>
 </main>
@@ -330,60 +372,96 @@ function setLang(lang) {
 </div>
 
 <script>
-var navToggle = document.getElementById('nav-toggle');
-var navDrawer = document.getElementById('nav-drawer');
-navToggle.addEventListener('click', function() {
-  var expanded = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  navDrawer.classList.toggle('open', !expanded);
-  document.body.style.overflow = expanded ? '' : 'hidden';
-});
-function closeDrawer() {
-  navToggle.setAttribute('aria-expanded', 'false');
-  navDrawer.classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && navDrawer.classList.contains('open')) closeDrawer();
-});
-window.addEventListener('resize', function() {
-  if (window.innerWidth > 960) closeDrawer();
-});
-var mainNav = document.querySelector('nav');
-window.addEventListener('scroll', function() {
-  mainNav.style.background = window.scrollY > 60 ? 'rgba(14,15,17,0.98)' : 'rgba(14,15,17,0.95)';
-}, {passive: true});
-var form = document.getElementById('contact-form');
-var successMsg = document.getElementById('form-success');
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  var nm = document.getElementById('f-name');
-  var co = document.getElementById('f-company');
-  var em = document.getElementById('f-email');
-  var ok = true;
-  [nm, co, em].forEach(function(f) {
-    if (!f.value.trim()) { f.style.borderColor = '#E84B22'; ok = false; }
-    else { f.style.borderColor = ''; }
-  });
-  if (em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
-    em.style.borderColor = '#E84B22'; ok = false;
+  var form = document.getElementById('contact-form');
+  var successMsg = document.getElementById('form-success');
+
+  function encodeForm(data) {
+    return Object.keys(data)
+      .map(function(key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+      })
+      .join('&');
   }
-  if (!ok) return;
-  successMsg.classList.add('visible');
-  form.querySelector('.form-submit').style.display = 'none';
-  [nm, co, em].forEach(function(f) { f.style.borderColor = ''; });
-});
-form.querySelectorAll('input, textarea, select').forEach(function(f) {
-  f.addEventListener('input', function() { f.style.borderColor = ''; });
-});
-document.querySelectorAll('[onclick*="f-model"]').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    setTimeout(function() {
-      document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
-    }, 50);
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var nm = document.getElementById('f-name');
+    var co = document.getElementById('f-company');
+    var em = document.getElementById('f-email');
+    var submitBtn = form.querySelector('.form-submit');
+    var ok = true;
+
+    [nm, co, em].forEach(function(f) {
+      if (!f.value.trim()) {
+        f.style.borderColor = '#E84B22';
+        ok = false;
+      } else {
+        f.style.borderColor = '';
+      }
+    });
+
+    if (em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
+      em.style.borderColor = '#E84B22';
+      ok = false;
+    }
+
+    if (!ok) return;
+
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.7';
+
+    var data = {
+      'form-name': 'contact',
+      'name': document.getElementById('f-name').value,
+      'company': document.getElementById('f-company').value,
+      'email': document.getElementById('f-email').value,
+      'phone': document.getElementById('f-phone').value,
+      'model': document.getElementById('f-model').value,
+      'production': document.getElementById('f-prod').value,
+      'message': document.getElementById('f-message').value,
+      'bot-field': form.querySelector('input[name="bot-field"]').value
+    };
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeForm(data)
+    })
+    .then(function(response) {
+      if (!response.ok) throw new Error('Network response was not ok');
+
+      successMsg.classList.add('visible');
+      submitBtn.style.display = 'none';
+      form.reset();
+
+      [nm, co, em].forEach(function(f) {
+        f.style.borderColor = '';
+      });
+    })
+    .catch(function(error) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      alert('Error al enviar el formulario. Inténtalo de nuevo.');
+      console.error(error);
+    });
   });
-});
+
+  form.querySelectorAll('input, textarea, select').forEach(function(f) {
+    f.addEventListener('input', function() {
+      f.style.borderColor = '';
+    });
+  });
+
+  document.querySelectorAll('[onclick*="f-model"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setTimeout(function() {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    });
+  });
 </script>
+
 
 <script>
 (function() {
@@ -406,6 +484,8 @@ document.querySelectorAll('[onclick*="f-model"]').forEach(function(btn) {
     banner.classList.add('hidden');
   });
 })();
+
+
 </script>
 </body>
 </html>
