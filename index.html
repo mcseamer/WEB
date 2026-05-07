@@ -386,14 +386,7 @@ function setLang(lang) {
   }
 
   form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: ...
-  })
-})
-
+    e.preventDefault();
 
     var nm = document.getElementById('f-name');
     var co = document.getElementById('f-company');
@@ -434,7 +427,9 @@ function setLang(lang) {
 
     fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       body: encodeForm(data)
     })
     .then(function(response) {
@@ -470,6 +465,7 @@ function setLang(lang) {
     });
   });
 </script>
+
 
 
 <script>
