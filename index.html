@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NDQFN9NS');</script>
-  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-676265908"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-676265908');
+</script>
+
 <script>
 function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
@@ -81,10 +84,6 @@ function setLang(lang) {
 
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDQFN9NS"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
 <a href="#main-content" class="skip-link"><span data-lang="es" class="active">Saltar al contenido</span><span data-lang="en">Skip to content</span></a>
 <div id="lang-bar" role="navigation" aria-label="Language selector">
   <div class="lang-btns">
@@ -286,7 +285,12 @@ function setLang(lang) {
         <div class="c-item"><div class="c-icon">🌐</div><div><div class="c-label">Web</div><div class="c-value"><a href="https://www.mcseamer.com" target="_blank" rel="noopener noreferrer">www.mcseamer.com</a></div></div></div>
       </div>
     </div>
-  
+    <form name="contact" netlify>
+      <input type="hidden" name="form-name" value="contact">
+      <p style="display:none;">
+        <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+      </p>
+    
   <div class="form-row">
     <div class="form-group">
       <label for="f-name"><span data-lang="es" class="active">Nombre *</span><span data-lang="en">Name *</span></label>
